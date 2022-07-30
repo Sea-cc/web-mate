@@ -161,6 +161,14 @@ npm install prettier -D
 npm i eslint-plugin-prettier eslint-config-prettier -D
 ```
 
+解决commit 提交问题(版本问题,需要兼容匹配)`npm install @vue/eslint-config-prettier @vue/eslint-config-typescript -D` 
+
+`@vue/eslint-config-prettier`版本太高(7.0.0)
+
+安装`@vue/eslint-config-prettier": "^6.0.0 `需要兼容`eslint-plugin-prettier": "^3.1.0`
+
+
+
 添加 prettier 插件：(`.eslintrc.js`文件下)
 
 ```json
