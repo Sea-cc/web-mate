@@ -302,12 +302,6 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 
 ![image-20210723150526211](https://tva1.sinaimg.cn/large/008i3skNgy1gsqwc4gtkxj30e207174t.jpg)
 
-📦提交失败注意 `eslint-config-prettier`or `@vue/eslint-config-prettier`版本问题（建议使用6版本）
-
-`"eslint-config-prettier": "^6.15.0"`
-
-` "@vue/eslint-config-prettier": "^6.0.0"`
-
 #### 1.5.2. 代码提交验证
 
 如果我们按照 cz 来规范了提交风格，但是依然有同事通过 `git commit` 按照不规范的格式提交应该怎么办呢？
