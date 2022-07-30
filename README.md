@@ -184,6 +184,8 @@ npm i eslint-plugin-prettier eslint-config-prettier -D
 
 📦当上述步骤都完成后,还会出现警告时,建议重启一下编译器
 
+当出现ESLint规则报错,可在错误信息中复制 “()” 内的规则到`.eslintrc.js`rules下进行设置
+
 ### 1.4. git Husky 和 eslint
 
 虽然我们已经要求项目使用 eslint 了，但是不能保证组员提交代码之前都将 eslint 中的问题解决掉了：
@@ -314,7 +316,7 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 npm i @commitlint/config-conventional @commitlint/cli -D
 ```
 
-2.在根目录创建 commitlint.config.js 文件，配置 commitlint
+2.在根目录创建 commitlint.config.js 文件，配置 commitlint: 如commitlint.config.js 文件报错,先提交让ESLint自动帮助我们修复
 
 ```js
 module.exports = {
@@ -341,7 +343,7 @@ vue.config.js 有三种配置方式：
     -   可以是一个对象，直接会被合并；
     -   可以是一个函数，会接收一个 config，可以通过 config 来修改配置；
 -   方式三：通过 chainWebpack 修改 webpack 的配置：
-    -   是一个函数，会接收一个基于 [webpack-chain](https://github.com/mozilla-neutrino/webpack-chain) 的 config 对象，可以对配置进行修改；
+    -   是一个函数，会接收一个基于 [webpack-chain](https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans) 的 config 对象，可以对配置进行修改；
 
 ```js
 const path = require('path')
@@ -740,3 +742,28 @@ pm.globals.set('token', res.data.token)
 接口文档 v2 版本：（有部分更新）
 
 https://documenter.getpostman.com/view/12387168/TzzDKb12
+
+
+
+## 四. 环境变量使用
+
+```
+.env                # 在所有的环境中被载入
+.env.local          # 在所有的环境中被载入，但会被 git 忽略
+.env.[mode]         # 只在指定的模式中被载入
+.env.[mode].local   # 只在指定的模式中被载入，但会被 git 忽略
+```
+
+请注意，只有 `NODE_ENV`，`BASE_URL` 和以 `VUE_APP_` 开头的变量将通过 `webpack.DefinePlugin` 静态地嵌入到*客户端侧*的代码中。这是为了避免意外公开机器上可能具有相同名称的私钥。定义时以 `VUE_APP_`前缀命名
+
+在`shims-vue.d.ts`类型声明文件下,声明定义的环境变量
+
+```ts
+declare const VUE_APP_BASE_URL: string
+```
+
+只有以 `VUE_APP_` 开头的变量会被 `webpack.DefinePlugin` 静态嵌入到客户端侧的包中。你可以在应用的代码中这样访问它们：
+
+```js
+console.log(process.env.VUE_APP_SECRET)
+```
