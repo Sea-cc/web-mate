@@ -1,13 +1,15 @@
 import { createStore } from 'vuex'
-
-export default createStore({
+import { IUser } from './auth/types'
+import loginModule from './auth/auth_'
+export default createStore<IUser>({
     state: () => {
         return {
-            userName: 'Emojis'
+            name: 'Emojis',
+            age: 1
         }
     },
     getters: {},
     mutations: {},
     actions: {},
-    modules: {}
+    modules: { loginModule }
 })

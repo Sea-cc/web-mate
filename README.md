@@ -161,13 +161,11 @@ npm install prettier -D
 npm i eslint-plugin-prettier eslint-config-prettier -D
 ```
 
-解决commit 提交问题(版本问题,需要兼容匹配)`npm install @vue/eslint-config-prettier @vue/eslint-config-typescript -D` 
+解决 commit 提交问题(版本问题,需要兼容匹配)`npm install @vue/eslint-config-prettier @vue/eslint-config-typescript -D`
 
 `@vue/eslint-config-prettier`版本太高(7.0.0)
 
 安装`@vue/eslint-config-prettier": "^6.0.0 `需要兼容`eslint-plugin-prettier": "^3.1.0`
-
-
 
 添加 prettier 插件：(`.eslintrc.js`文件下)
 
@@ -182,9 +180,9 @@ npm i eslint-plugin-prettier eslint-config-prettier -D
   ],
 ```
 
-📦当上述步骤都完成后,还会出现警告时,建议重启一下编译器
+📦 当上述步骤都完成后,还会出现警告时,建议重启一下编译器
 
-当出现ESLint规则报错,可在错误信息中复制 “()” 内的规则到`.eslintrc.js`rules下进行设置
+当出现 ESLint 规则报错,可在错误信息中复制 “()” 内的规则到`.eslintrc.js`rules 下进行设置
 
 ### 1.4. git Husky 和 eslint
 
@@ -196,7 +194,7 @@ npm i eslint-plugin-prettier eslint-config-prettier -D
 
 那么如何做到这一点呢？可以通过 Husky 工具：
 
--   husky 是一个 git hook 工具，可以帮助我们触发 git 提交的各个阶段：pre-commit(commit之前检测)、commit-msg(commit描述信息是否符合规范)、pre-push(push远程之前)
+-   husky 是一个 git hook 工具，可以帮助我们触发 git 提交的各个阶段：pre-commit(commit 之前检测)、commit-msg(commit 描述信息是否符合规范)、pre-push(push 远程之前)
 
 如何使用 husky 呢？
 
@@ -316,7 +314,7 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 npm i @commitlint/config-conventional @commitlint/cli -D
 ```
 
-2.在根目录创建 commitlint.config.js 文件，配置 commitlint: 如commitlint.config.js 文件报错,先提交让ESLint自动帮助我们修复
+2.在根目录创建 commitlint.config.js 文件，配置 commitlint: 如 commitlint.config.js 文件报错,先提交让 ESLint 自动帮助我们修复
 
 ```js
 module.exports = {
@@ -743,8 +741,6 @@ pm.globals.set('token', res.data.token)
 
 https://documenter.getpostman.com/view/12387168/TzzDKb12
 
-
-
 ## 四. 环境变量使用
 
 ```
@@ -767,3 +763,96 @@ declare const VUE_APP_BASE_URL: string
 ```js
 console.log(process.env.VUE_APP_SECRET)
 ```
+
+## 五. 项目
+
+##### 获取组件实例的类型进行注解
+
+如，获取子组件实例`vue2 this.$refs['xx']`
+
+vue3:`const com = ref<InstanceType<typeof 组件对象>>()`
+
+导入的组件对象，到使用组件中使用的并不是一个真正的对象，而是一个组件的描述对象（根据子组件的描述对象创建出来一个真正的组件实例），如
+
+import com from ‘./com.vue’
+
+注册 components:{ com }
+
+可以用导入的组件对象(com)用来进行类型注解吗？ **不行**
+
+解决方案： `type Com = InstanceType<typeof com>`
+
+InstanceType 可以帮助从某个`类型如(typeof com)`里面获取到一个实例的(com)构造函数（或者说一个拥有构造函数的实例 **com**）de 类型 `type Com = com`
+
+可以将这个实例用来对获取组件实例操作进行类型注解 const comRef = ref<Com>(null) or const comRef = ref<InstanceType<typeof com>>(null)
+
+接下来就可以通过 comRef 来获取组件的属性 or 方法等...数据
+
+##### 在 ts 中使用 setInterval
+
+setInterval 类型为：NodeJS.Timeout | null ，解决办法：`修改 `tsconfig.json`文件，引入 types 节点值为’node’`,清定时器时需要将数据转化为 Number：`clearInterval(Number(this.timer))`
+
+```ts
+import { defineStore } from 'pinia'
+interface IverifCode {
+    countDown: number
+    timer: NodeJS.Timeout | null
+    disabled_: boolean
+}
+/* interface UserState {
+    userInfo: Nullable<IUserInfoProps>
+} */
+export const verifyCodeStore = defineStore('verifyCode', {
+    state: (): IverifCode => {
+        return {
+            countDown: 60,
+            timer: null,
+            disabled_: true
+        }
+    },
+    getters: {},
+    actions: {
+        handleverifyCode() {
+            this.disabled_ = false
+            this.timer = setInterval(() => {
+                if (this.countDown === 0) {
+                    this.disabled_ = true
+                    this.countDown = 60
+                    clearInterval(Number(this.timer))
+                }
+                this.countDown -= 1
+            }, 1000)
+        }
+    }
+})
+```
+
+在组件中使用：`const store = verifyCodeStore()`，注意需要先调用，在读取数据
+
+解构 pinia 数据 `const {baseUrl} = storeToRefs(store)`
+
+`Composition Api` 中，不管是 state 还是 getter 都需要通过 `computed` 方法来监听变化，这和 `Options Api` 中，需要放到 `computed` 对象中的道理一样。另外， `Options Api` 中拿到的 state 值是可以直接进行修改操作的，当然还是建议写一个 action 来操作 state 值，方便后期维护。
+
+```ts
+组件使用
+import { verifyCodeStore } from '@/store/verifyCode'
+import { storeToRefs } from 'pinia'
+const store = verifyCodeStore()
+const { countDown, timer, disabled_ } = storeToRefs(store)
+const count = computed(() => countDown)
+const timer_ = computed(() => timer)
+const disabled = computed(() => disabled_)
+console.log(disabled)
+
+const getCode = () => {
+    if (!timer_.value) return
+    proxy.$message.success('验证码已发送')
+    store.handleverifyCode()
+}
+```
+
+解析返回的 token
+
+`import jwt_decode from "jwt-decode";`
+
+使用 css 变量问题 v-bind **页面初始化是获取不到的，会报错误，注意使用**

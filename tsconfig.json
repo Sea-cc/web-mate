@@ -1,18 +1,18 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
-        "strict": true,
+        "target": "esnext" /* esnext表示ES6以后 */,
+        "module": "esnext" /* 使用的模块化Common、ESmodule */,
+        "strict": true /* 严格模式检测 */,
         "jsx": "preserve",
         "moduleResolution": "node",
-        "skipLibCheck": true,
-        "esModuleInterop": true,
+        "skipLibCheck": true /* 跳过第三方库类型检测 */,
+        "esModuleInterop": true /* 是否允许混合使用export module、module.export */,
         "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,
         "useDefineForClassFields": true,
         "sourceMap": true,
-        "baseUrl": ".",
-        "types": ["webpack-env"],
+        "baseUrl": "." /* 文件解析时基本url */,
+        "types": ["webpack-env", "node"],
         "paths": {
             "@/*": ["src/*"]
         },

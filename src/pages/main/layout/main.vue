@@ -1,0 +1,7 @@
+<template>
+    <el-main>Main</el-main>
+</template>
+<script lang="ts" setup>
+import { reactive, ref, defineProps, defineEmits, getCurrentInstance, onMounted } from 'vue'
+</script>
+<style lang="scss" scoped></style>

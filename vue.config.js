@@ -17,15 +17,23 @@ module.exports = defineConfig({
     configureWebpack: {
         plugins: [
             AutoImport({
-                dirs: ['@/components'],
+                dirs: ['src/components'],
                 dts: 'src/utils/auto-imports.d.ts',
                 resolvers: [ElementPlusResolver()]
             }),
             Components({
-                dirs: ['@/components'],
+                dirs: ['src/components'],
                 dts: 'src/utils/components.d.ts',
                 resolvers: [ElementPlusResolver()]
             })
-        ]
+        ],
+        /* 添加反代理 */
+        devServer: {
+            proxy: {
+                '/api': {
+                    target: 'http://192.168.31.97:3000/'
+                }
+            }
+        } /* 后端接口反代理 */
     }
 })

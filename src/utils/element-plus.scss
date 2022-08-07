@@ -1,0 +1,42 @@
+@use 'element-plus/theme-chalk/src/message.scss' as *;
+// 覆盖el-message样式
+.el-message {
+    --el-message-bg-color: #ffffff;
+    --el-message-icon-size: 20px;
+    width: auto;
+    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+        0 9px 28px 8px rgb(0 0 0 / 5%);
+    border: none;
+    .el-message__content {
+        --el-message-text-color: #262626;
+    }
+    .el-icon {
+        font-size: 18px;
+    }
+}
+// icon 图标配置
+.icon {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: middle;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+// drawer 背景色 自定义类名
+.el-drawer.drawer-bg {
+    background-color: #f1f3f4;
+}
+// 修改默认样式
+.el-drawer .el-drawer__header {
+    margin-bottom: 0;
+}
+
+// 修改下拉选项 hover的样式
+.el-dropdown__list .el-dropdown-menu {
+    padding: 5px 6px;
+}
+.el-dropdown-menu__item:not(.is-disabled):focus {
+    // margin: 0 6px;
+    border-radius: 5px;
+}

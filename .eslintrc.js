@@ -18,6 +18,8 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        'vue/multi-word-component-names': 'off',
         '@typescript-eslint/no-explicit-any': 'off' /* 关闭ts any警告 */,
         '@typescript-eslint/no-unused-vars': 'off' /* 关闭定义未使用警告 */,
         'max-lines': [
@@ -29,7 +31,7 @@ module.exports = {
         'max-params': [
             'error',
             {
-                max: 3
+                max: 4
             }
         ]
     }

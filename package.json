@@ -6,13 +6,18 @@
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
-        "prettier": "prettier --write .",
-        "prepare": "husky install"
+        "prettier": "prettier --write src",
+        "prepare": "husky install",
+        "commit": "npx cz"
     },
     "dependencies": {
+        "@caohenghu/vue-colorpicker": "^1.2.4",
         "axios": "^0.27.2",
         "core-js": "^3.8.3",
-        "element-plus": "^2.2.11",
+        "element-plus": "^2.2.12",
+        "jwt-decode": "^3.1.2",
+        "normalize.css": "^8.0.1",
+        "pinia": "^2.0.17",
         "vue": "^3.2.13",
         "vue-router": "^4.0.3",
         "vuex": "^4.0.0"
