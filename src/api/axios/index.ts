@@ -61,7 +61,7 @@ class HttpAxios {
                 // ...
                 const TOKEN = authStore().TOKEN || LocalCache.getCache('AdminAuthToken')
                 const { headers } = config
-                config.headers = { ...headers, Authorization: 'baseURL' }
+                config.headers = { ...headers, Authorization: TOKEN }
                 console.log(config, '全局请求拦截')
 
                 return config

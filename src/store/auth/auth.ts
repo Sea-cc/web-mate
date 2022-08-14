@@ -31,14 +31,11 @@ export const authStore = defineStore('auth', {
             LocalCache.setCache('AdminAuthToken', result.data)
             LocalCache.setCache('UserInfo', this.userInfo)
             // 获取系统菜单权限等
-            this.handleMenus()
-            ElMessage.success(`你好呀！👋，欢迎回来`)
-        },
-        async handleMenus() {
-            const result = await getMenutree()
-            this.userMenus = result.data
-            LocalCache.setCache('AdminAuthMenus', result.data)
+            const menus = await getMenutree()
+            this.userMenus = menus.data
+            LocalCache.setCache('AdminAuthMenus', menus.data)
             router.push('/main')
+            ElMessage.success(`你好呀！👋，欢迎回来`)
         }
     }
 })

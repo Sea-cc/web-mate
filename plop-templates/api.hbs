@@ -1,0 +1,19 @@
+import axios from '../axios'
+import type { } from './types'
+enum URLApi {
+    LoginApi = '/api/users/login',
+}
+
+/**
+ * 登录
+ * @param {*} body
+ * @returns {*}
+ */
+export const signIn = (body /* type */) => {
+    return axios.request</* return type */>({
+        method: 'POST',
+        url: URLApi.LoginApi,
+        data: body,
+        loading: true
+    })
+}

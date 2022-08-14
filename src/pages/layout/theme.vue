@@ -58,6 +58,7 @@ const store = themeStore()
 const colors = store.colors
 function setLayout(layout: layoutItems) {
     store.changeLayout(layout)
+    drawer.value = false
 }
 const predefine = ['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585']
 function setThemeColor(changeType: keyof color, color: string) {

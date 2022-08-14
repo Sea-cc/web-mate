@@ -17,7 +17,44 @@ const routes: Array<RouteRecordRaw> /* 类型注解 */ = [
     {
         path: '/main',
         name: 'main',
-        component: () => import('../pages/main/index.vue')
+        component: () => import('../pages/main/index.vue'),
+        children: [
+            {
+                path: '/main/index',
+                name: 'home',
+                component: () => import('@/pages/main/home/index.vue')
+            },
+            {
+                path: '/main/systemManagement',
+                name: 'system',
+                // component: () => import('@/components/404.vue')
+                children: [
+                    {
+                        path: '/main/systemManagement/userManagement',
+                        name: 'system',
+                        component: () => import('@/pages/main/system/user/index.vue')
+                    }
+                ]
+            },
+            // {
+            //     path: '/main/componentManagement',
+            //     name: 'componentManagement',
+            //     redirect: '/main/componentManagement/table',
+            //     // component: () => import('@/components/404.vue')
+            //     children: [
+            //         {
+            //             path: '/main/componentManagement/table',
+            //             name: 'system',
+            //             component: () => import('@/pages/main/componentManagement/table/index.vue')
+            //         }
+            //     ]
+            // },
+            {
+                path: '/:catchAll(.*)',
+                name: 'fourOfFour',
+                component: () => import('@/components/404.vue')
+            }
+        ]
     }
 ]
 

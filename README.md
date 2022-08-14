@@ -856,3 +856,14 @@ const getCode = () => {
 `import jwt_decode from "jwt-decode";`
 
 使用 css 变量问题 v-bind **页面初始化是获取不到的，会报错误，注意使用**
+
+### Vue3 404 页面配置
+
+```ts
+
+ {
+        path: '/:catchAll(.*)',
+        name: 'fourOfFour',
+        component: () => import('@/components/404.vue')
+ }
+```

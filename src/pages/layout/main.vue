@@ -1,5 +1,7 @@
 <template>
-    <el-main>Main</el-main>
+    <Transition mode="out-in" name="scale-slide">
+        <router-view />
+    </Transition>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, defineProps, defineEmits, getCurrentInstance, onMounted } from 'vue'

@@ -8,8 +8,8 @@ export const themeStore = defineStore('theme', {
         return {
             layoutType: LocalCache.getCache('layout') || 'default',
             colors: {
-                themeColor: LocalCache.getCache('AdminTheme')?.themeColor || '#1a73e8',
-                headColor: LocalCache.getCache('AdminTheme')?.headColor || '#1a73e8'
+                themeColor: LocalCache.getCache('AdminTheme')?.themeColor || '#4165d7',
+                headColor: LocalCache.getCache('AdminTheme')?.headColor || '#4165d7'
             }
         }
     },
