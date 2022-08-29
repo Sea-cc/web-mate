@@ -31,7 +31,9 @@
                     />
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm">登 录</el-button>
+                    <el-button type="primary" @click="submitForm" :loading="loading"
+                        >登 录</el-button
+                    >
                     <el-button @click="handeRegister('REGISTER')">注 册</el-button>
                 </el-form-item>
             </el-form>
@@ -43,7 +45,6 @@ import { reactive, ref, defineProps, defineEmits, getCurrentInstance, onMounted 
 import type { FormInstance } from 'element-plus'
 import { loginrules } from './option'
 import LocalCache from '@/utils/cache'
-// import { useStore } from 'vuex'
 import { authStore } from '@/store/auth/auth'
 
 const emits = defineEmits(['switchForm'])
@@ -53,6 +54,7 @@ const handeRegister = (formType: string) => {
 
 // 表单 dom
 const formRef = ref<FormInstance>()
+const loading = ref<boolean>(false)
 
 const formModel = reactive({
     email: LocalCache.getCache('email') ?? '' /* 进行is记住密码 */,
@@ -64,10 +66,12 @@ const auth = authStore()
 // const loginRef = ref(null)
 const submitForm = () => {
     if (!formRef.value) return
-    formRef.value.validate((valid) => {
+    formRef.value.validate(async (valid) => {
         if (!valid) return
+        loading.value = true
         console.log(formModel, 'formModel')
-        auth.handlelogin(formModel)
+        const isOK = await auth.handlelogin(formModel)
+        loading.value = false
         // ...is记住密码(本地缓存,可进行信息加密和反解密)
         LocalCache.setCache('email', formModel.email)
         LocalCache.setCache('password', formModel.password)

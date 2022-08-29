@@ -1,4 +1,3 @@
-/* 专门存放类型的文件 */
 export interface IUser {
     name: string
     age: number

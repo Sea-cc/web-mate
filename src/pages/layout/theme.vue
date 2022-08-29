@@ -22,11 +22,18 @@
                 @active-change="setThemeColor('themeColor', $event)"
             />
             <el-divider> <h5>系统顶部背景色</h5> </el-divider>
-            <el-color-picker
-                :predefine="predefine"
-                v-model="colors.headColor"
-                @active-change="setThemeColor('headColor', $event)"
-            />
+            <div class="head-color-predefine">
+                <el-color-picker
+                    v-model="colors.headColor"
+                    @active-change="setThemeColor('headColor', $event)"
+                />
+                <div
+                    class="el-color-predefine__color"
+                    v-for="(item, index) in predefine"
+                    :key="index"
+                    :style="`background-color: ${item}`"
+                ></div>
+            </div>
         </el-card>
         <el-button
             style="
@@ -60,7 +67,7 @@ function setLayout(layout: layoutItems) {
     store.changeLayout(layout)
     drawer.value = false
 }
-const predefine = ['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585']
+const predefine = ['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#c71585']
 function setThemeColor(changeType: keyof color, color: string) {
     colors[changeType] = color
     store.changeThemeColor(colors)
@@ -144,6 +151,16 @@ $nav-bg-dark: #494545;
         z-index: 1;
         width: 14px;
         box-shadow: 8px 0 0 #fff;
+    }
+}
+.head-color-predefine {
+    display: flex;
+    align-items: center;
+    .el-color-predefine__color {
+        width: 22px;
+        height: 24px;
+        border-radius: 5px;
+        margin-left: 12px;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <el-menu class="el-menu-vertical" default-active="/main/index" :collapse="!isCollapse" router>
+    <el-menu class="el-menu-vertical" :default-active="defaultRoute" :collapse="!isCollapse" router>
         <!-- logo -->
         <div class="logon" v-if="layoutType == 'lt' || layoutType == 'll'">
             <i-svg icon="#el-icon-bird" />
@@ -29,20 +29,30 @@
         <slot name="aside-extend"></slot>
     </div>
     <div class="menu-switch">
-        {{ isCollapse ? '📦' : '' }}
         <el-switch
             v-model="isCollapse"
             inline-prompt
             active-icon="el-icon-a-97"
             inactive-icon="el-icon-a-97"
         />
-        {{ isCollapse ? '🕸️' : '' }}
     </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const defaultRoute = computed(() => {
+    return route.path
+})
+import {
+    Document,
+    Menu as IconMenu,
+    Location,
+    Setting,
+    ArrowLeftBold,
+    ArrowRightBold
+} from '@element-plus/icons-vue'
 import { themeStore } from '@/store/theme'
 import { authStore } from '@/store/auth/auth'
 const isCollapse = ref(true)
@@ -79,26 +89,19 @@ const handleClose = (key: string, keyPath: string[]) => {
 .el-menu {
     border: none;
     padding: 5px 0;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
     .el-menu--collapse {
         min-height: 100%;
+        overflow: visible;
     }
 
     .el-menu-item.is-active {
-        background-color: var(--el-color-primary-light-9);
+        background-color: var(--el-color-primary-light-7);
         font-weight: 600;
-        border-radius: 8px;
-        position: relative;
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 6px;
-            border-radius: 2px;
-            background: var(--el-color-primary);
-            z-index: 9999;
-        }
     }
 }
 .menu-switch {
@@ -113,6 +116,7 @@ const handleClose = (key: string, keyPath: string[]) => {
     bottom: 32px;
 }
 .logon {
+    text-align: center;
     font-size: 25px;
     background-color: var(--el-color-primary-light-7);
     padding: 6px 5px;

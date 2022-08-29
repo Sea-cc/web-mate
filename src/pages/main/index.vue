@@ -7,6 +7,7 @@
                     <aside-content />
                 </el-aside>
                 <el-main>
+                    <data-tabs></data-tabs>
                     <router-view v-slot="{ Component }">
                         <Transition name="slide-fade" mode="out-in">
                             <component :is="Component" />
@@ -58,6 +59,7 @@
 import { reactive, ref, defineProps, defineEmits, computed, watch, provide } from 'vue'
 import headerContent from '../layout/header.vue'
 import asideContent from '../layout/aside.vue'
+import dataTabs from '@/components/dataTabs.vue'
 // import mainContent from '../layout/main.vue'
 import layTheme from '../layout/theme.vue'
 import { themeStore } from '@/store/theme'
@@ -100,9 +102,10 @@ watch(
 }
 
 .el-aside {
-    color: #333;
-    background: #ffffff;
-    text-align: center;
+    // color: #333;
+    // background: #ffffff;
+    // text-align: center;
+    overflow: visible;
     height: calc(100vh - var(--headheight));
     position: relative;
     box-shadow: 0 8px 12px #ebedf0;
@@ -110,11 +113,10 @@ watch(
 }
 
 .el-main {
-    // background-color: #ffffff;
-    margin: 10px 0 0 6px;
+    --el-main-padding: 10px;
+    // position: relative;
     overflow: hidden;
-    color: #333;
-    height: calc(100vh - var(--maincalct) - 10px);
+    height: calc(100vh - var(--maincalct));
 }
 .theme-ll {
     position: fixed;

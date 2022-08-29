@@ -6,7 +6,6 @@ import { authStore } from '@/store/auth/auth'
 const routes: Array<RouteRecordRaw> /* 类型注解 */ = [
     {
         path: '/',
-        name: 'home',
         redirect: '/main'
     },
     {
@@ -17,44 +16,15 @@ const routes: Array<RouteRecordRaw> /* 类型注解 */ = [
     {
         path: '/main',
         name: 'main',
+        redirect: '/main/index',
         component: () => import('../pages/main/index.vue'),
-        children: [
-            {
-                path: '/main/index',
-                name: 'home',
-                component: () => import('@/pages/main/home/index.vue')
-            },
-            {
-                path: '/main/systemManagement',
-                name: 'system',
-                // component: () => import('@/components/404.vue')
-                children: [
-                    {
-                        path: '/main/systemManagement/userManagement',
-                        name: 'system',
-                        component: () => import('@/pages/main/system/user/index.vue')
-                    }
-                ]
-            },
-            // {
-            //     path: '/main/componentManagement',
-            //     name: 'componentManagement',
-            //     redirect: '/main/componentManagement/table',
-            //     // component: () => import('@/components/404.vue')
-            //     children: [
-            //         {
-            //             path: '/main/componentManagement/table',
-            //             name: 'system',
-            //             component: () => import('@/pages/main/componentManagement/table/index.vue')
-            //         }
-            //     ]
-            // },
-            {
-                path: '/:catchAll(.*)',
-                name: 'fourOfFour',
-                component: () => import('@/components/404.vue')
-            }
-        ]
+        /* 根据用户菜单与总路由对比生成的动态路由 */
+        children: []
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'fourOfFour',
+        component: () => import('@/components/404.vue')
     }
 ]
 
@@ -68,6 +38,8 @@ router.beforeEach((to, from) => {
         const token = auth.TOKEN /* || LocalCache.getCache('AdminAuthToken') */
         if (!token) return '/login'
     }
+    // 根据路由修改页面标题
+    document.title = (to.meta.name as string) || '管理后台'
 })
 
 export default router

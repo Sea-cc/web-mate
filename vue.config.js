@@ -31,8 +31,8 @@ module.exports = defineConfig({
         devServer: {
             proxy: {
                 '/api': {
-                    target: 'http://172.20.10.11:3000/'
-                    // target: 'http://192.168.31.97:3000/'
+                    // target: 'http://172.20.10.11:3000/'
+                    target: 'http://192.168.31.97:3000/'
                 }
             }
         } /* 后端接口反代理 */

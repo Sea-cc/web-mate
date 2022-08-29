@@ -11,7 +11,7 @@ enum AuthApi {
  * @returns {*}
  */
 export const signIn = (body: ILogin) => {
-    return axios.request<IDataType<string>>({
+    return axios.request<IDataType<any>>({
         method: 'POST',
         url: AuthApi.LoginApi,
         data: body,
